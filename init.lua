@@ -43,21 +43,23 @@ now(function()
 	vim.cmd.colorscheme("catppuccin")
 end)
 now(function()
-	local group = vim.api.nvim_create_augroup("wezterm", {})
-	set_user_var("NEOVIM", "true")
-	vim.api.nvim_create_autocmd({ "BufEnter", "TabEnter" }, {
-		callback = function(args)
-			local nvim_file = split(args.file, "/")
-			set_user_var("NEOVIM_FILE", nvim_file[#nvim_file])
-		end,
-		group = group,
-	})
-	vim.api.nvim_create_autocmd("ExitPre", {
-		callback = function()
-			set_user_var("NEOVIM", "false")
-		end,
-		group = group,
-	})
+	if os.getenv("TERM_PROGRAM") == "WezTerm" then
+		local group = vim.api.nvim_create_augroup("wezterm", {})
+		set_user_var("NEOVIM", "true")
+		vim.api.nvim_create_autocmd({ "BufEnter", "TabEnter" }, {
+			callback = function(args)
+				local nvim_file = split(args.file, "/")
+				set_user_var("NEOVIM_FILE", nvim_file[#nvim_file])
+			end,
+			group = group,
+		})
+		vim.api.nvim_create_autocmd("ExitPre", {
+			callback = function()
+				set_user_var("NEOVIM", "false")
+			end,
+			group = group,
+		})
+	end
 end)
 now(function()
 	add({ source = "j-hui/fidget.nvim" })
