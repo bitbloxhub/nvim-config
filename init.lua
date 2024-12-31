@@ -86,6 +86,7 @@ now(function()
 	vim.o.softtabstop = 4
 	vim.o.shiftwidth = 4
 	vim.o.number = true
+	vim.o.mousescroll = "ver:1,hor:1"
 end)
 now(function()
 	add({ source = "neovim/nvim-lspconfig" })
