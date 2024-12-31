@@ -234,6 +234,22 @@ now(function()
 	add({ source = "MeanderingProgrammer/render-markdown.nvim" })
 	require("render-markdown").setup({})
 end)
+--[[now(function()
+	add({ source = "3rd/image.nvim" })
+	require("image").setup({
+		backend = "kitty",
+		processor = "magick_cli",
+		integrations = {
+			markdown = {
+				only_render_image_at_cursor = true,
+			},
+		},
+		--max_height_window_percentage = math.huge, -- this is necessary for a good experience
+		--max_width_window_percentage = math.huge,
+		--window_overlap_clear_enabled = true,
+		--window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+	})
+end)]]--
 -- Safely execute later
 later(function()
 	require("mini.ai").setup()
