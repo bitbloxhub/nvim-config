@@ -89,6 +89,8 @@ now(function()
 	vim.o.shiftwidth = 4
 	vim.o.number = true
 	vim.o.mousescroll = "ver:1,hor:1"
+	vim.g.mapleader = " "
+	vim.g.maplocalleader = " "
 end)
 now(function()
 	add({ source = "neovim/nvim-lspconfig" })
@@ -226,6 +228,38 @@ now(function()
 		max_width_window_percentage = math.huge,
 		window_overlap_clear_enabled = true,
 		window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+	})
+end)
+now(function ()
+	add({ source = "folke/snacks.nvim" })
+	local snacks = require("snacks")
+	snacks.setup({})
+	vim.keymap.set("n", "<leader>ft", function()
+		snacks.terminal.toggle()
+	end, { desc = "Open Terminal" })
+end)
+now(function ()
+	add({ source = "folke/edgy.nvim" })
+	require("edgy").setup({
+		bottom = {
+			{
+				ft = "snacks_terminal",
+				size = { height = 0.3 },
+				-- exclude floating windows
+				filter = function(_, win)
+					return vim.api.nvim_win_get_config(win).relative == ""
+				end,
+			},
+		},
+		left = {
+			{
+				title = "Neo-Tree",
+				ft = "neo-tree",
+				filter = function(buf)
+					return vim.b[buf].neo_tree_source == "filesystem"
+				end,
+			},
+		}
 	})
 end)
 -- Safely execute later
