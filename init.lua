@@ -46,10 +46,11 @@ now(function()
 	if os.getenv("TERM_PROGRAM") == "WezTerm" then
 		local group = vim.api.nvim_create_augroup("wezterm", {})
 		set_user_var("NEOVIM", "true")
-		vim.api.nvim_create_autocmd({ "BufEnter", "TabEnter" }, {
-			callback = function(args)
-				local nvim_file = split(args.file, "/")
-				set_user_var("NEOVIM_FILE", nvim_file[#nvim_file])
+		vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TabEnter", "BufLeave", "WinLeave", "TabLeave" }, {
+			callback = function()
+				vim.defer_fn(function ()
+					set_user_var("NEOVIM_FILE", vim.fn.expand('%:t'))
+				end, 50)
 			end,
 			group = group,
 		})
@@ -230,7 +231,7 @@ now(function()
 		window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
 	})
 end)
-now(function ()
+now(function()
 	add({ source = "folke/snacks.nvim" })
 	local snacks = require("snacks")
 	snacks.setup({})
@@ -238,7 +239,7 @@ now(function ()
 		snacks.terminal.toggle()
 	end, { desc = "Open Terminal" })
 end)
-now(function ()
+now(function()
 	add({ source = "folke/edgy.nvim" })
 	require("edgy").setup({
 		bottom = {
@@ -259,7 +260,7 @@ now(function ()
 					return vim.b[buf].neo_tree_source == "filesystem"
 				end,
 			},
-		}
+		},
 	})
 end)
 -- Safely execute later
