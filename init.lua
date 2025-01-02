@@ -75,6 +75,9 @@ end)
 now(function()
 	require("mini.statusline").setup()
 end)
+now(function ()
+	require('mini.jump2d').setup()
+end)
 now(function()
 	vim.o.expandtab = false
 	vim.o.tabstop = 4
