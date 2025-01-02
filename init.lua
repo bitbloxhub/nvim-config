@@ -20,17 +20,6 @@ local function set_user_var(key, value)
 	io.write(string.format("\027]1337;SetUserVar=%s=%s\a", key, vim.base64.encode(tostring(value))))
 end
 
-local function split(inputstr, sep)
-	if sep == nil then
-		sep = "%s"
-	end
-	local t = {}
-	for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
-		table.insert(t, str)
-	end
-	return t
-end
-
 -- Safely execute immediately
 now(function()
 	vim.o.termguicolors = true
