@@ -261,6 +261,10 @@ now(function()
 		},
 	})
 end)
+now(function()
+	add({ source = "willothy/flatten.nvim" })
+	require("flatten").setup({})
+end)
 -- Safely execute later
 later(function()
 	require("mini.ai").setup()
