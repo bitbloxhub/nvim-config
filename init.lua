@@ -48,8 +48,8 @@ now(function()
 		set_user_var("NEOVIM", "true")
 		vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "TabEnter", "BufLeave", "WinLeave", "TabLeave" }, {
 			callback = function()
-				vim.defer_fn(function ()
-					set_user_var("NEOVIM_FILE", vim.fn.expand('%:t'))
+				vim.defer_fn(function()
+					set_user_var("NEOVIM_FILE", vim.fn.expand("%:t"))
 				end, 50)
 			end,
 			group = group,
@@ -73,6 +73,9 @@ now(function()
 			},
 		},
 	})
+end)
+now(function()
+	require("mini.pairs").setup()
 end)
 now(function()
 	require("mini.icons").setup()
